@@ -27,11 +27,11 @@ def LISTA():
     #a Bernoulli-Gaussian x, noisily observed through a random matrix
     #prob = problems.random_access_problem(2) # 1 or 2 for compressive random access or massive MIMO
 
-    layers_tied = networks.build_LISTA(prob,T=3,initial_lambda=.1,untied=False)
-    #layers_untied = networks.build_LISTA(prob,T=3,initial_lambda=.1,untied=True)
+    layers_tied = networks.build_LISTA(prob,T=16,initial_lambda=.1,untied=False)
+    #layers_untied = networks.build_LISTA(prob,T=16,initial_lambda=.1,untied=True)
     # plan the learning
-    training_stages_tied = train.setup_training(layers_tied,prob,trinit=1e-3,refinements=() )
-    #training_stages_untied = train.setup_training(layers_untied,prob,trinit=1e-3,refinements=() )
+    training_stages_tied = train.setup_training(layers_tied,prob,trinit=1e-3,refinements=(.5,) )
+    #training_stages_untied = train.setup_training(layers_untied,prob,trinit=1e-3,refinements=(.5,) )
     # do the learning (takes a while)
     sess = train.do_training(training_stages_tied,prob,'LISTA_bg_giid_tied.npz')
     #sess = train.do_training(training_stages_untied,prob,'LISTA_bg_giid_untied.npz')
@@ -43,11 +43,11 @@ def LAMP():
     #prob = problems.random_access_problem(2) # 1 or 2 for compressive random access or massive MIMO
 
     # build a LAMP network to solve the problem and get the intermediate results so we can greedily extend and then refine(fine-tune)
-    layers_tied = networks.build_LAMP(prob,T=3,shrink='bg',untied=False)
-    layers_untied = networks.build_LAMP(prob,T=3,shrink='bg',untied=True)
+    layers_tied = networks.build_LAMP(prob,T=16,shrink='bg',untied=False)
+    layers_untied = networks.build_LAMP(prob,T=16,shrink='bg',untied=True)
     # plan the learning
-    training_stages_tied = train.setup_training(layers_tied,prob,trinit=1e-3,refinements=() )
-    training_stages_untied = train.setup_training(layers_untied,prob,trinit=1e-3,refinements=() )
+    training_stages_tied = train.setup_training(layers_tied,prob,trinit=1e-3,refinements=(.5,) )
+    training_stages_untied = train.setup_training(layers_untied,prob,trinit=1e-3,refinements=(.5,) )
 
     # do the learning (takes a while)
     sess = train.do_training(training_stages_tied,prob,'LAMP_bg_giid_tied.npz')
@@ -61,11 +61,11 @@ def LISTA_KAPPA():
     prob = problems.bernoulli_gaussian_trial(kappa=15,M=250,N=500,L=1000,pnz=.1,SNR=40) #a Bernoulli-Gaussian x, noisily observed through a random matrix
     #prob = problems.random_access_problem(2) # 1 or 2 for compressive random access or massive MIMO
 
-    layers_tied = networks.build_LISTA(prob,T=3,initial_lambda=.1,untied=False)
-    #layers_untied = networks.build_LISTA(prob,T=3,initial_lambda=.1,untied=True)
+    layers_tied = networks.build_LISTA(prob,T=16,initial_lambda=.1,untied=False)
+    #layers_untied = networks.build_LISTA(prob,T=16,initial_lambda=.1,untied=True)
     # plan the learning
-    training_stages_tied = train.setup_training(layers_tied,prob,trinit=1e-3,refinements=() )
-    #training_stages_untied = train.setup_training(layers_untied,prob,trinit=1e-3,refinements=() )
+    training_stages_tied = train.setup_training(layers_tied,prob,trinit=1e-3,refinements=(.5,) )
+    #training_stages_untied = train.setup_training(layers_untied,prob,trinit=1e-3,refinements=(.5,) )
     # do the learning (takes a while)
     sess = train.do_training(training_stages_tied,prob,'LISTA_bg_giid_tied_kappa.npz')
     #sess = train.do_training(training_stages_untied,prob,'LISTA_bg_giid_untied.npz')
@@ -78,11 +78,11 @@ def LAMP_KAPPA():
     #prob = problems.random_access_problem(2) # 1 or 2 for compressive random access or massive MIMO
 
     # build a LAMP network to solve the problem and get the intermediate results so we can greedily extend and then refine(fine-tune)
-    layers_tied = networks.build_LAMP(prob,T=3,shrink='bg',untied=False)
-    layers_untied = networks.build_LAMP(prob,T=3,shrink='bg',untied=True)
+    layers_tied = networks.build_LAMP(prob,T=16,shrink='bg',untied=False)
+    layers_untied = networks.build_LAMP(prob,T=16,shrink='bg',untied=True)
     # plan the learning
-    training_stages_tied = train.setup_training(layers_tied,prob,trinit=1e-3,refinements=() )
-    training_stages_untied = train.setup_training(layers_untied,prob,trinit=1e-3,refinements=() )
+    training_stages_tied = train.setup_training(layers_tied,prob,trinit=1e-3,refinements=(.5,) )
+    training_stages_untied = train.setup_training(layers_untied,prob,trinit=1e-3,refinements=(.5,) )
 
     # do the learning (takes a while)
     sess = train.do_training(training_stages_tied,prob,'LAMP_bg_giid_tied_kappa.npz')
@@ -94,10 +94,10 @@ def LAMP_Shrinkage(shrink_name, untied_flag, kappa_num=None):
     #prob = problems.random_access_problem(2) # 1 or 2 for compressive random access or massive MIMO
 
     # build a LAMP network to solve the problem and get the intermediate results so we can greedily extend and then refine(fine-tune)
-    layers = networks.build_LAMP(prob,T=3,shrink=shrink_name,untied=untied_flag)
+    layers = networks.build_LAMP(prob,T=16,shrink=shrink_name,untied=untied_flag)
 
     # plan the learning
-    training_stages = train.setup_training(layers,prob,trinit=1e-3,refinements=() )
+    training_stages = train.setup_training(layers,prob,trinit=1e-3,refinements=(.5,) )
 
     # do the learning (takes a while)
     kappas = 0
@@ -115,11 +115,11 @@ def LVAMP_Shrinkage(shrink_name, kappa_num=None):
     #prob = problems.random_access_problem(2) # 1 or 2 for compressive random access or massive MIMO
 
     # build an LVAMP network to solve the problem and get the intermediate results so we can greedily extend and then refine(fine-tune)
-    layers = networks.build_LVAMP(prob,T=3,shrink=shrink_name)
-    #layers = networks.build_LVAMP_dense(prob,T=3,shrink='pwgrid')
+    layers = networks.build_LVAMP(prob,T=16,shrink=shrink_name)
+    #layers = networks.build_LVAMP_dense(prob,T=16,shrink='pwgrid')
 
     # plan the learning
-    training_stages = train.setup_training(layers,prob,trinit=1e-4,refinements=())
+    training_stages = train.setup_training(layers,prob,trinit=1e-4,refinements=(.5,))
 
     # do the learning (takes a while)
     kappas = 0
@@ -130,27 +130,27 @@ def LVAMP_Shrinkage(shrink_name, kappa_num=None):
 
 
 LAMP_Shrinkage('soft', False)
-# LAMP_Shrinkage('soft', True)
-# LAMP_Shrinkage('soft', False,15)
-# LAMP_Shrinkage('soft', True,15)
+LAMP_Shrinkage('soft', True)
+LAMP_Shrinkage('soft', False,15)
+LAMP_Shrinkage('soft', True,15)
 print("soft finish")
 
-# LAMP_Shrinkage('bg', False)
-# LAMP_Shrinkage('bg', True)
-# LAMP_Shrinkage('bg', False, 15)
-# LAMP_Shrinkage('bg', True ,15)
-# print("bg finish")
+LAMP_Shrinkage('bg', False)
+LAMP_Shrinkage('bg', True)
+LAMP_Shrinkage('bg', False, 15)
+LAMP_Shrinkage('bg', True ,15)
+print("bg finish")
 
-# LAMP_Shrinkage('pwlin', False)
-# LAMP_Shrinkage('expo',False)
-# LAMP_Shrinkage('spline', False)
-# print("other finish")
+LAMP_Shrinkage('pwlin', False)
+LAMP_Shrinkage('expo',False)
+LAMP_Shrinkage('spline', False)
+print("other finish")
 
-# LAMP_Shrinkage('bg', False, 100)
-# LAMP_Shrinkage('bg', True, 100)
-# print("bg100 finish")
+LAMP_Shrinkage('bg', False, 100)
+LAMP_Shrinkage('bg', True, 100)
+print("bg100 finish")
 
-# LAMP_Shrinkage('pwlin', True)
-# LAMP_Shrinkage('pwlin', False, 15)
-# LAMP_Shrinkage('pwlin', True, 15)
-# print("pwlin finish")
+LAMP_Shrinkage('pwlin', True)
+LAMP_Shrinkage('pwlin', False, 15)
+LAMP_Shrinkage('pwlin', True, 15)
+print("pwlin finish")
