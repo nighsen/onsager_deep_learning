@@ -128,8 +128,8 @@ def LVAMP_Shrinkage(shrink_name, kappa_num=None):
     file_name = 'LVAMP_bg_giid_%s_%d.npz' % (shrink_name, kappas)
     sess = train.do_training(training_stages,prob, file_name)
 
+LAMP_Shrinkage('bg', True)
+LAMP_Shrinkage('bg', False)
+LAMP_Shrinkage('bg', True, 15)
+LAMP_Shrinkage('bg', False ,15)
 
-LVAMP_Shrinkage('bg')
-LVAMP_Shrinkage('pwlin')
-LVAMP_Shrinkage('bg', 15)
-LVAMP_Shrinkage('pwlin', 15)

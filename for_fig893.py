@@ -129,7 +129,9 @@ def LVAMP_Shrinkage(shrink_name, kappa_num=None):
     sess = train.do_training(training_stages,prob, file_name)
 
 
-LVAMP_Shrinkage('bg')
-LVAMP_Shrinkage('pwlin')
-LVAMP_Shrinkage('bg', 15)
-LVAMP_Shrinkage('pwlin', 15)
+LAMP_Shrinkage('soft', True)
+LAMP_Shrinkage('pwlin', False)
+LAMP_Shrinkage('expo', True)
+LAMP_Shrinkage('spline', True)
+LAMP_Shrinkage('pwlin', False, 15)
+
